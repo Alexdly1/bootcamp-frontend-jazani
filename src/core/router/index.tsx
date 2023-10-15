@@ -5,6 +5,7 @@ import Admin from '../layouts/Admin';
 import Home from '../../home';
 import MineralTypeSearch from '../../generals/mineral-types/views/searchs';
 import MineralSearch from '../../generals/minerals/views/searchs';
+import MeasureUnit from '../../mcs/Measureunit/views/searchs';
 
 const routes: RouteObject[] = [
 	{
@@ -22,6 +23,14 @@ const routes: RouteObject[] = [
 			{
 				path: '/minerals',
 				element: <MineralSearch />,
+			},
+			{
+				path: '/measureunit',
+				element: <MeasureUnit />,
+			},
+			{
+				path: '/measureunit',
+				element: <MeasureUnit />,
 			},
 		],
 	},

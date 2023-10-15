@@ -24,6 +24,16 @@ const Menu: FC = () => {
 							<NavDropdown.Divider />
 							<NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
 						</NavDropdown>
+						<NavDropdown title="Mc" id="basic-nav-dropdown">
+							<Link className="dropdown-item" to="measureunit">
+								Measureunit
+							</Link>
+							<Link className="dropdown-item" to="measureunit">
+								Investment
+							</Link>
+							<NavDropdown.Divider />
+							<NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+						</NavDropdown>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
