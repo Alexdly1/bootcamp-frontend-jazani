@@ -18,7 +18,7 @@ const index = (): JSX.Element => {
 	const loadMeasureunit = async (): Promise<void> => {
 		const response = await MeasureunitRepository.findAll();
 
-		measureunitSet(response.data);
+		measureunitSet(response);
 		console.log('response: ', response);
 	};
 
