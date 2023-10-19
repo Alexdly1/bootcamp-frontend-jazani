@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { LocalStorageSession } from '@/core/sessions';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -35,6 +36,8 @@ const index = (): JSX.Element => {
 		const response: UserSecurityResponse = await mutateAsync(payload);
 
 		console.log('Logi: ', response);
+
+		LocalStorageSession.saveAuthorization(response);
 	};
 
 	return (
