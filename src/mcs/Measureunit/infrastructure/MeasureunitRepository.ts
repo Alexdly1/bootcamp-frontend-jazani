@@ -1,4 +1,5 @@
 import axios, { type AxiosResponse } from 'axios';
+import { API_BASE_URL } from '@/core/constants/env';
 import { type MeasureunitResponse } from '../domain';
 
 export const findAll = async (): Promise<MeasureunitResponse[]> => {
@@ -9,8 +10,7 @@ export const findAll = async (): Promise<MeasureunitResponse[]> => {
 	// return response;
 
 	const response: AxiosResponse<MeasureunitResponse[]> = await axios.get<MeasureunitResponse[]>(
-		'https://localhost:7214/api/measureunit',
+		`${API_BASE_URL}/api/measureunit`,
 	);
-
 	return response.data;
 };
