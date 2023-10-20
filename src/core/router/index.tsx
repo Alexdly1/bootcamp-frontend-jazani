@@ -1,6 +1,8 @@
 import { createBrowserRouter, type RouteObject } from 'react-router-dom';
 // import { lazy, Suspense } from 'react';
 
+import { PrivateOutlet, PublicOutlet } from '@/core/router/CheckPageNavigation';
+
 import Admin from '@/core/layouts/Admin';
 import Home from '@/home';
 import MineralTypeSearch from '@/generals/mineral-types/views/searchs';
@@ -14,7 +16,11 @@ import Login from '@/auth/login/views';
 const routes: RouteObject[] = [
 	{
 		path: '/',
-		element: <Admin />,
+		element: (
+			<PrivateOutlet>
+				<Admin />
+			</PrivateOutlet>
+		),
 		children: [
 			{
 				index: true,
@@ -40,7 +46,11 @@ const routes: RouteObject[] = [
 	},
 	{
 		path: '/login',
-		element: <Auth />,
+		element: (
+			<PublicOutlet>
+				<Auth />
+			</PublicOutlet>
+		),
 		children: [
 			{
 				index: true,
