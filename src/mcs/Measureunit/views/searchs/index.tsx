@@ -4,14 +4,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/esm/Card';
-import { type RequestPagination } from '@/shared/domain';
+import { type FilterPage, type RequestPagination } from '@/shared/domain';
 import usePaginatedSearchMeasureunit from '../../application/hooks/usePaginatedSearchMeasureunit';
 import { TableSimple } from '@/core/components/table';
 import { createColumnHelper } from '@tanstack/react-table';
+import TablePaginated from '@/core/components/table/TablePaginated';
 
 const index = (): JSX.Element => {
 	const [measureunitFilter, measureunitSet] = useState<RequestPagination<MeasureunitFilter>>({
-		page: 2,
+		page: 1,
 		perPage: 10,
 	});
 
@@ -51,6 +52,17 @@ const index = (): JSX.Element => {
 		}),
 	];
 
+	// Methods
+	const goToPage = (payload: FilterPage): void => {
+		measureunitSet(prev => {
+			return {
+				...prev,
+				page: payload.page,
+				perPage: payload.perPage,
+			};
+		});
+	};
+
 	return (
 		<>
 			<Row className="pt-2">
@@ -58,9 +70,10 @@ const index = (): JSX.Element => {
 					<Card>
 						<Card.Header>Listado de Tipo de unidades de medida</Card.Header>
 						<Card.Body>
-							<TableSimple<MeasureunitResponse>
+							<TablePaginated<MeasureunitResponse>
 								columns={columns}
-								data={measureunitPagineted?.data ?? []}
+								data={measureunitPagineted}
+								goToPage={goToPage}
 							/>
 						</Card.Body>
 					</Card>
