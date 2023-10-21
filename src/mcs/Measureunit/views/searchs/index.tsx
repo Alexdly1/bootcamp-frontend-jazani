@@ -1,26 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 
-import { MeasureunitRepository } from '../../infrastructure';
-import { type MeasureunitResponse } from '../../domain';
+import { type MeasureunitFilter, type MeasureunitResponse } from '../../domain';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/esm/Card';
+import { type RequestPagination } from '@/shared/domain';
+import usePaginatedSearchMeasureunit from '../../application/hooks/usePaginatedSearchMeasureunit';
 
 const index = (): JSX.Element => {
-	const [measureunit, measureunitSet] = useState<MeasureunitResponse[]>([]);
+	const [measureunitFilter, measureunitSet] = useState<RequestPagination<MeasureunitFilter>>({
+		page: 2,
+		perPage: 10,
+	});
 
-	useEffect(() => {
-		void loadMeasureunit();
-	}, []);
-
-	const loadMeasureunit = async (): Promise<void> => {
-		const response = await MeasureunitRepository.findAll();
-
-		measureunitSet(response);
-		console.log('response: ', response);
-	};
+	// React Query
+	const { data: measureunitPagineted, isFetching } =
+		usePaginatedSearchMeasureunit(measureunitFilter);
 
 	return (
 		<>
@@ -39,19 +36,18 @@ const index = (): JSX.Element => {
 									</tr>
 								</thead>
 								<tbody>
-									{measureunit.length > 0 &&
-										measureunit.map(measureunit => (
-											<tr key={measureunit.id}>
-												<td>{measureunit.id}</td>
-												<td>{measureunit.name}</td>
-												<td>{measureunit.description}</td>
-												<td>
-													<Badge pill bg={measureunit.state ? 'success' : 'danger'}>
-														{measureunit.state ? 'Activo' : 'Elminado'}
-													</Badge>
-												</td>
-											</tr>
-										))}
+									{measureunitPagineted?.data?.map(measureunit => (
+										<tr key={measureunit.id}>
+											<td>{measureunit.id}</td>
+											<td>{measureunit.name}</td>
+											<td>{measureunit.description}</td>
+											<td>
+												<Badge pill bg={measureunit.state ? 'success' : 'danger'}>
+													{measureunit.state ? 'Activo' : 'Elminado'}
+												</Badge>
+											</td>
+										</tr>
+									))}
 								</tbody>
 							</Table>
 						</Card.Body>
